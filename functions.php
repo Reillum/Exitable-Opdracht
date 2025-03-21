@@ -10,7 +10,7 @@ function calculateBowlingScore($rolls){
         if (isStrike($rolls, $rollIndex)){
             //Strike: 10 punten + volgende 2 worpen 
             $score += 10 + strikeBonus($rolls, $rollIndex);
-            $rollIndex++ //Naar de volgende worp gaan
+            $rollIndex++; //Naar de volgende worp gaan
         }
 
         elseif(isSpare($rolls, $rollIndex)){
@@ -28,7 +28,7 @@ function calculateBowlingScore($rolls){
     return $score;
 }
 
-function isStrike($rolls, $rollsIndex){
+function isStrike($rolls, $rollIndex){
     return $rolls[$rollIndex] === 10;
 }
 

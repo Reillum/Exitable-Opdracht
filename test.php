@@ -7,9 +7,12 @@ $player_2_rolls = [9, 0, 8, 2, 7, 3, 10, 5, 4, 9, 1, 8, 2, 7, 3, 10, 6, 4, 5];
 $player_1_score = calculateBowlingScore($player_1_rolls);
 $player_2_score = calculateBowlingScore($player_2_rolls);
 
- 
-echo $player_1_score;
-echo $player_2_score;
+// print_r ($player_1_rolls)."<br>";
+// echo "<br>";
+// print_r ($player_2_rolls)."<br>";
+// echo "<br>";
+echo "Totale Score Speler 1: ". $player_1_score. "<br>";
+echo "Totale Score Speler 2: ".$player_2_score. "<br>";
 
 
 ?>
