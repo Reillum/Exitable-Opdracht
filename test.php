@@ -1,26 +1,42 @@
 <?php
 require_once "functions.php";
+echo renderPageBegin();
 
-$player_1_rolls = [10, 7, 3, 9, 1, 10, 10, 10, 2, 3, 6, 4, 10, 7, 2, 6, 4, 9, 1];
 
-$player_2_rolls = [9, 0, 8, 2, 7, 3, 10, 5, 4, 9, 1, 8, 2, 7, 3, 10, 6, 4, 5];
+// Testspelers
+$player1_rolls = [10, 7, 3, 9, 0, 10, 10, 8, 1, 9, 1, 10, 10, 7, 2, 10, 10, 8, 2, 9];
+$player2_rolls = [9, 0, 8, 2, 7, 3, 10, 5, 4, 9, 1, 8, 2, 10, 6, 3, 10, 6, 4, 10];
 
-$player_1_score = calculateBowlingScore($player_1_rolls);
-$player_2_score = calculateBowlingScore($player_2_rolls);
+$player1_data = calculateBowlingScore($player1_rolls);
+$player2_data = calculateBowlingScore($player2_rolls);
+$winner = determineWinner(end($player1_data['scores']), end($player2_data['scores']));
 
-echo "<h2>Bowling Score Tracker</h2>";
+echo "<h2>Bowling Score Overzicht</h2>";
 
-echo "<h3>Score Speler 1:</h3>";
-for ($i = 0; $i < count($player_1_score); $i++) {
-    echo "Frame " . ($i + 1) . ": " . $player_1_score[$i] . "<br>";
-}
+echo "<table>";
 
-echo "<h3>Score Speler 2:</h3>";
-for ($i = 0; $i < count($player_2_score); $i++) {
-    echo "Frame " . ($i + 1) . ": " . $player_2_score[$i] . "<br>";
-}
+echo "<tr>";
+echo "<th>Frame</th>";
+echo "<th>Speler 1 Worpen</th>";
+echo "<th>Speler 1 Score</th>";
+echo "<th>Speler 2 Worpen</th>";
+echo "<th>Speler 2 Score</th>";
+echo "</tr>";
 
-echo "<br>";
+for ($i = 1; $i <= 10; $i++):
+    echo "<tr>";
+    echo "<td>" . $i . "</td>";
+    echo "<td>" . (isset($player1_data['throws'][$i]) ? implode(", ", $player1_data['throws'][$i]) : "-") . "</td>";
+    echo "<td>" . ($player1_data['scores'][$i] ?? 0) . "</td>";
+    echo "<td>" . (isset($player2_data['throws'][$i]) ? implode(", ", $player2_data['throws'][$i]) : "-") . "</td>";
+    echo "<td>" . ($player2_data['scores'][$i] ?? 0) . "</td>";
+    echo "</tr>";    
+    endfor;
 
-determineWinner($player_1_score,$player_2_score);
+echo "</table>";
+
+echo "<h2>$winner</h2>";
+
+echo renderPageEnd();
+
 ?>
