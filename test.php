@@ -4,8 +4,8 @@ echo renderPageBegin();
 
 
 // Testspelers
-$player1_rolls = [10, 7, 3, 9, 0, 10, 10, 8, 1, 9, 1, 10, 10, 7, 2, 10, 10, 8, 2, 9];
-$player2_rolls = [9, 0, 8, 2, 7, 3, 10, 5, 4, 9, 1, 8, 2, 10, 6, 3, 10, 6, 4, 10];
+$player1_rolls = [10, 7, 3, 9, 0, 10, 10, 8, 1, 9, 1, 10, 10, 7, 2, 10, 10, 8, 2]; // Laatste frame: 10, 8, 2
+$player2_rolls = [9, 0, 8, 2, 7, 3, 10, 5, 4, 9, 1, 8, 2, 10, 6, 3, 10, 6, 4, 10]; // Laatste frame: 6, 4, 10
 
 $player1_data = calculateBowlingScore($player1_rolls);
 $player2_data = calculateBowlingScore($player2_rolls);

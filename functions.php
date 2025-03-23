@@ -8,34 +8,52 @@ function calculateBowlingScore($rolls) {
     $frameScores = [];
     $throws = [];
 
-    // Itereren door alle worpen voor elke frame
     while ($frame < 10) {
-        // Sla de worpen per frame op
+        // Sla de eerste worp op
         $throws[$frame + 1][] = $rolls[$rollIndex];
 
-        if (isStrike($rolls, $rollIndex)) {
-            // Strike: 10 punten + volgende 2 worpen
+        if ($frame == 9){ // Speciale behandeling voor het 10e frame
+            // Voeg de tweede worp toe
+            $throws[$frame + 1][] = $rolls[$rollIndex + 1];
+
+            // Controleer of een derde worp nodig is (bij strike of spare)
+            if ($rolls[$rollIndex] == 10 || ($rolls[$rollIndex] + $rolls[$rollIndex + 1] == 10)) {
+                $throws[$frame + 1][] = $rolls[$rollIndex + 2];
+                $score += $rolls[$rollIndex] + $rolls[$rollIndex + 1] + $rolls[$rollIndex + 2];
+            } else {
+                $score += $rolls[$rollIndex] + $rolls[$rollIndex + 1];
+            }
+
+            $frameScores[$frame + 1] = $score;
+            break;
+        }
+
+        if (isStrike($rolls, $rollIndex)){
             $score += 10 + strikeBonus($rolls, $rollIndex);
             $frameScores[$frame + 1] = $score;
-            $rollIndex++; // Naar de volgende worp gaan
-        } elseif (isSpare($rolls, $rollIndex)) {
-            // Spare: 10 punten + de volgende worp
+            $rollIndex++;
+        } 
+        
+        elseif (isSpare($rolls, $rollIndex)){
             $throws[$frame + 1][] = $rolls[$rollIndex + 1];
             $score += 10 + spareBonus($rolls, $rollIndex);
             $frameScores[$frame + 1] = $score;
             $rollIndex += 2;
-        } else {
-            // Normale worpen (geen strike/spare)
+        } 
+        
+        else {
             $throws[$frame + 1][] = $rolls[$rollIndex + 1];
             $score += sumOfTwoRolls($rolls, $rollIndex);
             $frameScores[$frame + 1] = $score;
             $rollIndex += 2;
         }
+
         $frame++;
     }
 
     return ['scores' => $frameScores, 'throws' => $throws];
 }
+
 
 function isStrike($rolls, $rollIndex) {
     return $rolls[$rollIndex] === 10;
